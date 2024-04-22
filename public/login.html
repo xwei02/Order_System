@@ -151,9 +151,41 @@
       </form>
     </div>
   </div>
-  
-  
-  
-
 </body>
 </html>
+
+<script>
+  function handleLogin(event) {
+  event.preventDefault();
+
+  const username = document.getElementById('username').value;
+  const password = document.getElementById('password').value;
+
+  // 发送请求到你的API端点
+  fetch('/api/user')
+    .then(response => response.json())
+    .then(users => {
+      // 假设`users`是一个用户数组，找到匹配的用户
+      const user = users.find(u => u.user_id === username && u.user_password === password);
+
+      if (user) {
+        // 用户验证成功，存储用户ID到localStorage并跳转到index.html
+        localStorage.setItem('user', JSON.stringify({ user_id: user.user_idNumber, user_name: user.user_name }));
+        window.location.href = 'index.html'; // 确保index.html路径正确
+      } else {
+        // 登录失败
+        alert('登入失敗：帳號或密碼錯誤');
+      }
+    })
+    .catch(error => {
+      console.error('錯誤:', error);
+      alert('登入失敗：無法連接到服務器');
+    });
+}
+
+// 监听表单提交事件
+document.querySelector('form').addEventListener('submit', handleLogin);
+
+
+  
+  </script>

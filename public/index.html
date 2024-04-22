@@ -112,7 +112,7 @@
       <div class="collapse navbar-collapse" id="navbarCollapse">
         <ul class="navbar-nav ms-auto mb-2 mb-md-0">
           <li class="nav-item">
-            <a class="btn btn-lg btn-success" aria-current="page" href="login.html" role="button">登入</a>
+            <a id="loginButton" class="btn btn-lg btn-success" aria-current="page" href="login.html" role="button">登入</a>
           </li>
         </ul>
         <!-- <form class="d-flex" role="search">
@@ -120,6 +120,7 @@
           <button class="btn btn-outline-success" type="submit">Search</button>
         </form> -->
       </div>
+      <div id="userNameDisplay" style="color: white;display: none;"></div>
     </div>
   </nav>
   
@@ -134,3 +135,34 @@
 
 </body>
 </html>
+
+<script>
+const user = JSON.parse(localStorage.getItem('user'));
+
+document.addEventListener('DOMContentLoaded', function() {
+  // 假设登录按钮的ID是'loginButton'，用户名显示的地方是'userNameDisplay'
+  const loginButton = document.getElementById('loginButton');
+  const userNameDisplay = document.getElementById('userNameDisplay');
+  
+  // 检查localStorage中是否存储了用户信息
+  const user = JSON.parse(localStorage.getItem('user'));
+  
+  if (user) {
+    // 用户已登录，隐藏登录按钮
+    if (loginButton) loginButton.style.display = 'none';
+    
+    // 显示用户名称
+    if (userNameDisplay) {
+      userNameDisplay.textContent = user.user_name; // 假设存储在localStorage中的用户信息有'user_name'字段
+      userNameDisplay.style.display = 'block';
+    }
+  } else {
+    // 用户未登录，显示登录按钮
+    if (loginButton) loginButton.style.display = 'block';
+    
+    // 隐藏用户名显示
+    if (userNameDisplay) userNameDisplay.style.display = 'none';
+  }
+});
+
+</script>
