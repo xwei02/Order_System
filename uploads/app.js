@@ -6,6 +6,7 @@ const port = 3000;
 const fs = require('fs');
 const multer = require('multer');
 const mysql = require('mysql');
+const upload = multer({ dest: 'uploads/' }); // 设置文件上传的临时目录
 
 
 // 创建数据库连接
